@@ -9,13 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 import com.l2a.storeelseapi.internal.FileUtils;
@@ -71,7 +68,7 @@ public class SeStorageManager extends BroadcastReceiver {
     }
 
     private File mPrefsDir;
-    private final HashMap<String, SharedPreferencesImpl> mSharedPrefs =
+    private HashMap<String, SharedPreferencesImpl> mSharedPrefs =
             new HashMap<String, SharedPreferencesImpl>();
 
     private SeStorageManager() {
@@ -85,65 +82,26 @@ public class SeStorageManager extends BroadcastReceiver {
             return;
         }
 
-        // Get the filename
-        Uri contentUri = intent.getParcelableExtra(SeIntent.EXTRA_PREFS_DIR);
-        if (null == contentUri) {
-            return;
+        String prefsDirPath = intent.getStringExtra(SeIntent.EXTRA_PREFS_DIR_PATH);
+        Log.d(TAG, "prefsDirPath=" + prefsDirPath);
+
+        if (null != prefsDirPath) {
+            mPrefsDir = new File(prefsDirPath);
         }
-
-        ContentResolver cr = context.getContentResolver();
-        try {
-            ParcelFileDescriptor fd = cr.openFileDescriptor(contentUri, "rw");
-            cr.openFileDescriptor(contentUri, "rw");
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        // mPrefsDir = new File(dirPath);
-    }
-
-    private final HashMap<String, File> mRoots = new HashMap<String, File>();
-
-    private File getFileForUri(Uri uri) {
-        String path = uri.getEncodedPath();
-
-        final int splitIndex = path.indexOf('/', 1);
-        final String tag = Uri.decode(path.substring(1, splitIndex));
-        path = Uri.decode(path.substring(splitIndex + 1));
-
-        final File root = mRoots.get(tag);
-        if (root == null) {
-            throw new IllegalArgumentException("Unable to find configured root for " + uri);
-        }
-
-        File file = new File(root, path);
-        try {
-            file = file.getCanonicalFile();
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Failed to resolve canonical path for " + file);
-        }
-
-        if (!file.getPath().startsWith(root.getPath())) {
-            throw new SecurityException("Resolved path jumped beyond configured root");
-        }
-
-        return file;
     }
 
     private File makeFilename(File base, String name) {
         if (name.indexOf(File.separatorChar) < 0) {
             return new File(base, name);
         }
-        throw new IllegalArgumentException(
-                "File " + name + " contains a path separator");
+        throw new IllegalArgumentException("File " + name + " contains a path separator");
     }
 
     private File makeBackupFile(File prefsFile) {
         return new File(prefsFile.getPath() + ".bak");
     }
 
-    public File getSharedPrefsFile(String name) {
+    private File getSharedPrefsFile(String name) {
         File file = makeFilename(mPrefsDir, name + ".xml");
         Log.d(TAG, "filepath=" + file.getAbsolutePath());
         return file;
@@ -154,10 +112,6 @@ public class SeStorageManager extends BroadcastReceiver {
     }
 
     public SharedPreferences getSharedPreferences(String name, int mode) {
-        if (null == mPrefsDir) {
-            return null;
-        }
-
         SharedPreferencesImpl sp;
         File prefsFile;
         boolean needInitialLoad = false;

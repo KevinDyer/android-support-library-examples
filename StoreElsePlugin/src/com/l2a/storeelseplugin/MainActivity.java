@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
 
             Editor editor = prefs.edit();
             editor.putString(TAG, TAG);
-            editor.apply();
+            editor.commit();
 
             handled = true;
             break;

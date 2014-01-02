@@ -19,7 +19,6 @@ public class SeIntent {
      * {@link #ACTION_GET_STORAGE_FILENAMES}. It defines the path to the
      * preferences file to be used for this plugin.
      */
-    public static final String EXTRA_PREFS_DIR = "com.l2a.storeelseapi.extra.PREFS_DIR";
-
+    public static final String EXTRA_PREFS_DIR_PATH = "com.l2a.storeelseapi.extra.PREFS_DIR_PATH";
     public static final String EXTRA_PACKAGE_NAME = "com.l2a.storeelseapi.extra.PACKAGE_NAME";
 }
