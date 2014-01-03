@@ -4,11 +4,11 @@ package com.l2a.storeelsemain.widget;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.l2a.storeelsemain.fragment.MyFragment;
 
-public class CursorPagerAdapter extends FragmentStatePagerAdapter {
+public class CursorPagerAdapter extends FragmentPagerAdapter {
     private Cursor mCursor;
 
     public CursorPagerAdapter(FragmentManager fm) {

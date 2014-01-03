@@ -73,6 +73,8 @@ public class MainActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        
+        showFragment(new Fragment());
     }
 
     @Override
@@ -150,12 +152,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private class GridViewAction implements Action {
-
-        @Override
-        public int getIcon() {
-            return android.R.drawable.ic_dialog_alert;
-        }
-
         @Override
         public CharSequence getTitle() {
             return "Grid View";
@@ -173,12 +169,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private class ViewPagerAction implements Action {
-
-        @Override
-        public int getIcon() {
-            return android.R.drawable.ic_dialog_info;
-        }
-
         @Override
         public CharSequence getTitle() {
             return "View Pager";
