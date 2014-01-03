@@ -2,27 +2,28 @@
 package com.l2a.storeelsemain;
 
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract.Contacts;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.l2a.storeelsemain.widget.CursorPagerAdapter;
+import com.l2a.storeelsemain.fragment.GridViewFragment;
+import com.l2a.storeelsemain.fragment.ViewPagerFragment;
+import com.l2a.storeelsemain.widget.ActionAdapter;
+import com.l2a.storeelsemain.widget.ActionAdapter.Action;
 
-public class MainActivity extends ActionBarActivity implements LoaderCallbacks<Cursor> {
-    private CursorPagerAdapter mAdapter;
+public class MainActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private ActionAdapter mActionAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
@@ -34,11 +35,12 @@ public class MainActivity extends ActionBarActivity implements LoaderCallbacks<C
 
         mTitle = mDrawerTitle = getTitle();
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        mAdapter = new CursorPagerAdapter(getSupportFragmentManager());
+        mActionAdapter = new ActionAdapter(this);
+        mActionAdapter.add(new GridViewAction());
+        mActionAdapter.add(new ViewPagerAction());
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -62,16 +64,15 @@ public class MainActivity extends ActionBarActivity implements LoaderCallbacks<C
             }
         };
 
-        // Set ViewPager adapter
-        viewPager.setAdapter(mAdapter);
+        // Set the action adapter for the drawer
+        mDrawerList.setAdapter(mActionAdapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListner());
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        getSupportLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -104,6 +105,7 @@ public class MainActivity extends ActionBarActivity implements LoaderCallbacks<C
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
+
         // Handle your other action bar items...
 
         return super.onOptionsItemSelected(item);
@@ -121,24 +123,75 @@ public class MainActivity extends ActionBarActivity implements LoaderCallbacks<C
         getSupportActionBar().setTitle(mTitle);
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
-        return new CursorLoader(
-                this,
-                Contacts.CONTENT_URI,
-                null,
-                null,
-                null,
-                null);
+    private void selectItem(int position) {
+        final Action action = mActionAdapter.getItem(position);
+        action.execute();
+
+        /*
+         * Highlight the selected item, update the title, and close the drawer
+         */
+        mDrawerList.setItemChecked(position, true);
+        setTitle(action.getTitle());
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mAdapter.swapCursor(data);
+    private void showFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
     }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> laoder) {
-        mAdapter.swapCursor(null);
+    private class DrawerItemClickListner implements OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    private class GridViewAction implements Action {
+
+        @Override
+        public int getIcon() {
+            return android.R.drawable.ic_dialog_alert;
+        }
+
+        @Override
+        public CharSequence getTitle() {
+            return "Grid View";
+        }
+
+        @Override
+        public CharSequence getSummary() {
+            return "Displays the grid view";
+        }
+
+        @Override
+        public void execute() {
+            showFragment(new GridViewFragment());
+        }
+    }
+
+    private class ViewPagerAction implements Action {
+
+        @Override
+        public int getIcon() {
+            return android.R.drawable.ic_dialog_info;
+        }
+
+        @Override
+        public CharSequence getTitle() {
+            return "View Pager";
+        }
+
+        @Override
+        public CharSequence getSummary() {
+            return null;
+        }
+
+        @Override
+        public void execute() {
+            showFragment(new ViewPagerFragment());
+        }
     }
 }
