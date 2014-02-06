@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -84,18 +83,6 @@ public class MainActivity extends ActionBarActivity {
          * Sync the toggle state after onRestoreInstanceState has occurred.
          */
         mDrawerToggle.syncState();
-    }
-
-    /* Called whenever we call invalidateOptionsMenu() */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        /*
-         * If the nav drawer is open, hide action items related to the content
-         * view.
-         */
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        // menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
