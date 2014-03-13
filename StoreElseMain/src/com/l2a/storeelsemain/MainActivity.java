@@ -14,8 +14,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.l2a.storeelsemain.fragment.GridViewFragment;
-import com.l2a.storeelsemain.fragment.ViewPagerFragment;
+import com.l2a.storeelsemain.action.GridViewAction;
+import com.l2a.storeelsemain.action.ViewPagerAction;
+import com.l2a.storeelsemain.action.WifiConnectAction;
 import com.l2a.storeelsemain.widget.ActionAdapter;
 import com.l2a.storeelsemain.widget.ActionAdapter.Action;
 
@@ -38,8 +39,9 @@ public class MainActivity extends ActionBarActivity {
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         mActionAdapter = new ActionAdapter(this);
-        mActionAdapter.add(new GridViewAction());
-        mActionAdapter.add(new ViewPagerAction());
+        mActionAdapter.add(new GridViewAction(getSupportFragmentManager()));
+        mActionAdapter.add(new ViewPagerAction(getSupportFragmentManager()));
+        mActionAdapter.add(new WifiConnectAction(this));
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -72,7 +74,7 @@ public class MainActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        
+
         showFragment(new Fragment());
     }
 
@@ -135,40 +137,6 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
-        }
-    }
-
-    private class GridViewAction implements Action {
-        @Override
-        public CharSequence getTitle() {
-            return "Grid View";
-        }
-
-        @Override
-        public CharSequence getSummary() {
-            return "Displays the grid view";
-        }
-
-        @Override
-        public void execute() {
-            showFragment(new GridViewFragment());
-        }
-    }
-
-    private class ViewPagerAction implements Action {
-        @Override
-        public CharSequence getTitle() {
-            return "View Pager";
-        }
-
-        @Override
-        public CharSequence getSummary() {
-            return null;
-        }
-
-        @Override
-        public void execute() {
-            showFragment(new ViewPagerFragment());
         }
     }
 }

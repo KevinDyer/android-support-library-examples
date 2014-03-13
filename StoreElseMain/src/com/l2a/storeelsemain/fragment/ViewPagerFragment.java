@@ -35,7 +35,7 @@ public class ViewPagerFragment extends Fragment implements LoaderCallbacks<Curso
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_view_pager, container);
+        View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
 

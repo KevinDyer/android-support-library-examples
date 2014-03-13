@@ -22,7 +22,7 @@ public class GridViewFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_grid_view, container);
+        View view = inflater.inflate(R.layout.fragment_grid_view, container, false);
 
         GridView gridview = (GridView) view.findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(getActivity()));
