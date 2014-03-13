@@ -1,18 +1,20 @@
 
 package com.l2a.craps;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+
+import com.l2a.craps.player.SimplePlayer;
 
 public class MainActivity extends ActionBarActivity {
+    protected static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,28 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Table table = new Table();
+                SimplePlayer player = new SimplePlayer();
+                table.addPlayer(player);
+
+                int round = 0;
+                while (player.canPlay()) {
+                    round++;
+
+                    table.playRound();
+
+                    Log.d(TAG, "Round: " + Integer.toString(round));
+                    Log.d(TAG, String.format(
+                            "Player: %d %b",
+                            player.getAmount(),
+                            player.getHasBet()));
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -37,8 +61,8 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         /*
          * Handle action bar item clicks here. The action bar will automatically
-         * handle clicks on the Home/Up button, so long as you specify a
-         * parent activity in AndroidManifest.xml.
+         * handle clicks on the Home/Up button, so long as you specify a parent
+         * activity in AndroidManifest.xml.
          */
         int id = item.getItemId();
         if (id == R.id.action_settings) {
