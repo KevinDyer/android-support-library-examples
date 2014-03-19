@@ -20,7 +20,7 @@ public class PlaceBet extends BaseBet {
         int value = roll.getValue();
 
         if (mNumber == value) {
-            Odds odds = getOdds();
+            Odds odds = getOdds(mNumber);
             int payment = odds.getPayment(getAmount());
             won(payment);
         } else if (7 == value) {
@@ -28,8 +28,8 @@ public class PlaceBet extends BaseBet {
         }
     }
 
-    private Odds getOdds() {
-        switch (mNumber) {
+    public static Odds getOdds(int number) {
+        switch (number) {
         case 4:
         case 10:
             return new Odds(5, 9);
@@ -43,7 +43,7 @@ public class PlaceBet extends BaseBet {
         return null;
     }
 
-    private class Odds {
+    public static class Odds {
         private final int mIn;
         private final int mOut;
 
@@ -55,6 +55,15 @@ public class PlaceBet extends BaseBet {
         public int getPayment(int amount) {
             return (amount * mOut) / mIn;
         }
+
+        public int getAmount(int minimum) {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+    }
+
+    public int getNumber() {
+        return mNumber;
     }
 
 }

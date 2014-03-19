@@ -8,22 +8,33 @@ import com.l2a.craps.Table;
 import com.l2a.craps.bet.Bet;
 import com.l2a.craps.bet.PassLineBet;
 
-public class SimplePlayer implements Player {
-    private int mAmount = 100;
-
+public class PassLinePlayer implements Player {
+    private int mAmount;
     private PassLineBet mPassLineBet;
+
+    public PassLinePlayer(int amount) {
+        mAmount = amount;
+    }
 
     @Override
     public List<Bet> getBets(Table table) {
         List<Bet> bets = new ArrayList<Bet>();
 
-        if (!hasPassLineBet() && !table.isPointEstablished()) {
-            int tableMinimum = table.getTableMinimum();
-            if (mAmount >= tableMinimum) {
-                mPassLineBet = new PassLineBet(this, tableMinimum);
-                bets.add(mPassLineBet);
-            }
+        if (table.isPointEstablished()) {
+            return bets;
         }
+
+        if (hasPassLineBet()) {
+            return bets;
+        }
+
+        int amount = table.getTableMinimum();
+        if (!canAfford(bets, amount)) {
+            return bets;
+        }
+
+        mPassLineBet = new PassLineBet(this, amount);
+        bets.add(mPassLineBet);
 
         return bets;
     }
@@ -41,6 +52,14 @@ public class SimplePlayer implements Player {
 
         mAmount -= amount;
         return true;
+    }
+
+    protected boolean canAfford(List<Bet> bets, int amount) {
+        int pending = amount;
+        for (Bet bet : bets) {
+            pending += bet.getAmount();
+        }
+        return (pending <= getAmount());
     }
 
     private boolean hasPassLineBet() {
