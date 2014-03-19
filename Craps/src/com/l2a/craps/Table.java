@@ -6,60 +6,76 @@ import java.util.List;
 
 import com.l2a.craps.bet.Bet;
 import com.l2a.craps.dice.Dice;
+import com.l2a.craps.dice.FairDice;
 import com.l2a.craps.dice.Roll;
 import com.l2a.craps.player.Player;
 
 public class Table {
     private static final int BET_TABLE_MINIMUM = 5;
 
-    private List<Player> mPlayers;
-    private List<Bet> mBets;
-    private Dice mDice;
+    private List<Player> mPlayers = new ArrayList<Player>();
+    private List<Bet> mBets = new ArrayList<Bet>();
+    private Dice mDice = new FairDice();
 
-    private int mPoint = -1;
+    private static final int OFF = -1;
+    private int mPoint = OFF;
 
     public void playRound() {
-        // Players place bets
-        for (Player player : mPlayers) {
-            List<Bet> bets = player.placeBets(this);
-            for (Bet bet : bets) {
-                placePlayerBet(player, bet);
-            }
-        }
+        // Place bets
+        placeBets();
 
-        // Shooter rolls
+        // Roll the dice
         Roll roll = mDice.roll();
 
         // Resolve bets
-        List<Bet> remove = new ArrayList<Bet>();
+        resolveBets(roll);
+
+        // Resolve table
+        resolveTable(roll);
+
+        // TODO Adjust bets
+    }
+
+    private void placeBets() {
+        for (Player player : mPlayers) {
+            // Get bets from player
+            List<Bet> bets = player.getBets(this);
+
+            // Place bets
+            mBets.addAll(bets);
+        }
+    }
+
+    private void resolveBets(Roll roll) {
+        List<Bet> lostBets = new ArrayList<Bet>();
+
         for (Bet bet : mBets) {
+            // Resolve the bet
             bet.resolve(this, roll);
+
+            // Check to see if it has lost
             if (bet.hasLost()) {
-                remove.add(bet);
+                lostBets.add(bet);
+            } else if (bet.hasWon()) {
+                Player player = bet.getPlayer();
+                int payment = bet.getPayment();
+                player.addAmount(payment);
+            } else {
+                // Do nothing
             }
         }
-        mBets.removeAll(remove);
 
-        // Resolve table state
-        resolvePoint(roll);
-
-        // TODO Allow players to adjust?
+        // Remove lost bets
+        mBets.removeAll(lostBets);
     }
 
-    private void placePlayerBet(Player player, Bet bet) {
-        int amount = bet.getAmount();
-        if (player.takeAmount(amount)) {
-            mBets.add(bet);
-        }
-    }
+    private void resolveTable(Roll roll) {
+        final int value = roll.getValue();
 
-    private void resolvePoint(Roll roll) {
-        int value = roll.getValue();
-
-        // Seven-out
+        // Resolve point
         if (isPointEstablished()) {
-            if (7 == value || getPoint() == value) {
-                mPoint = -1;
+            if (7 == value) {
+                mPoint = OFF;
             }
         } else {
             if (isPointNumber(value)) {
@@ -68,28 +84,12 @@ public class Table {
         }
     }
 
-    private boolean isPointNumber(int value) {
-        Integer[] pointNumbers = {
-                4, 5, 6, 8, 9, 10,
-        };
-        return contains(pointNumbers, value);
-    }
-
     public boolean isPointEstablished() {
-        return (-1 != mPoint);
+        return (OFF != mPoint);
     }
 
     public int getPoint() {
         return mPoint;
-    }
-
-    private static <T> boolean contains(T[] items, T value) {
-        for (T item : items) {
-            if (value.equals(item)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public int getTableMinimum() {
@@ -98,5 +98,27 @@ public class Table {
 
     public boolean addPlayer(Player player) {
         return mPlayers.add(player);
+    }
+
+    public boolean canPlay() {
+        for (Player player : mPlayers) {
+            if (player.canPlay()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static int[] POINT_NUMBERS = {
+            4, 5, 6, 8, 9, 10,
+    };
+
+    public static boolean isPointNumber(int value) {
+        for (int pointNumber : POINT_NUMBERS) {
+            if (pointNumber == value) {
+                return true;
+            }
+        }
+        return false;
     }
 }

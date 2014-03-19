@@ -14,7 +14,7 @@ public class SimplePlayer implements Player {
     private PassLineBet mPassLineBet;
 
     @Override
-    public List<Bet> placeBets(Table table) {
+    public List<Bet> getBets(Table table) {
         List<Bet> bets = new ArrayList<Bet>();
 
         if (!hasPassLineBet() && !table.isPointEstablished()) {
@@ -29,8 +29,8 @@ public class SimplePlayer implements Player {
     }
 
     @Override
-    public void win(Bet bet) {
-        mAmount += bet.getAmount();
+    public void addAmount(int amount) {
+        mAmount += amount;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class SimplePlayer implements Player {
     }
 
     public boolean canPlay() {
-        return hasPassLineBet();
+        return hasPassLineBet() || getAmount() >= 5;
     }
 
     public boolean getHasBet() {

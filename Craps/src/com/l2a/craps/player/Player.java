@@ -7,10 +7,11 @@ import com.l2a.craps.Table;
 import com.l2a.craps.bet.Bet;
 
 public interface Player {
-    public List<Bet> placeBets(Table table);
+    List<Bet> getBets(Table table);
 
-    public void win(Bet bet);
+    void addAmount(int amount);
 
-    public boolean takeAmount(int amount);
+    boolean takeAmount(int amount);
 
+    boolean canPlay();
 }

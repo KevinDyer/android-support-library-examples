@@ -4,14 +4,11 @@ package com.l2a.craps;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.l2a.craps.player.SimplePlayer;
 
 public class MainActivity extends ActionBarActivity {
     protected static final String TAG = MainActivity.class.getSimpleName();
@@ -26,28 +23,6 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Table table = new Table();
-                SimplePlayer player = new SimplePlayer();
-                table.addPlayer(player);
-
-                int round = 0;
-                while (player.canPlay()) {
-                    round++;
-
-                    table.playRound();
-
-                    Log.d(TAG, "Round: " + Integer.toString(round));
-                    Log.d(TAG, String.format(
-                            "Player: %d %b",
-                            player.getAmount(),
-                            player.getHasBet()));
-                }
-            }
-        }).start();
     }
 
     @Override
@@ -66,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
          */
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            new Game().start();
             return true;
         }
         return super.onOptionsItemSelected(item);
