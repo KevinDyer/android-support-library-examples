@@ -7,13 +7,13 @@ import java.util.List;
 import com.l2a.craps.Table;
 import com.l2a.craps.bet.Bet;
 import com.l2a.craps.bet.PassLineBet;
+import com.l2a.craps.dice.Roll;
 
-public class PassLinePlayer implements Player {
-    private int mAmount;
+public class PassLinePlayer extends BasePlayer {
     private PassLineBet mPassLineBet;
 
     public PassLinePlayer(int amount) {
-        mAmount = amount;
+        super(amount);
     }
 
     @Override
@@ -40,26 +40,12 @@ public class PassLinePlayer implements Player {
     }
 
     @Override
-    public void addAmount(int amount) {
-        mAmount += amount;
+    public void adjustBets(Table table, Roll roll) {
     }
 
     @Override
-    public boolean takeAmount(int amount) {
-        if (amount > mAmount) {
-            return false;
-        }
-
-        mAmount -= amount;
-        return true;
-    }
-
-    protected boolean canAfford(List<Bet> bets, int amount) {
-        int pending = amount;
-        for (Bet bet : bets) {
-            pending += bet.getAmount();
-        }
-        return (pending <= getAmount());
+    public boolean canPlay(Table table) {
+        return super.canPlay(table) || hasPassLineBet();
     }
 
     private boolean hasPassLineBet() {
@@ -69,17 +55,5 @@ public class PassLinePlayer implements Player {
             return false;
         }
         return true;
-    }
-
-    public boolean canPlay() {
-        return hasPassLineBet() || getAmount() >= 5;
-    }
-
-    public boolean getHasBet() {
-        return hasPassLineBet();
-    }
-
-    public int getAmount() {
-        return mAmount;
     }
 }

@@ -1,8 +1,8 @@
 
 package com.l2a.craps;
 
+import com.l2a.craps.player.InsidePlayer;
 import com.l2a.craps.player.PassLinePlayer;
-import com.l2a.craps.player.PlaceBetPlayer;
 
 public class Game extends Thread {
     @Override
@@ -12,11 +12,11 @@ public class Game extends Thread {
 
         // Create Players
         PassLinePlayer passLinePlayer = new PassLinePlayer(100);
-        PlaceBetPlayer placeBetPlayer = new PlaceBetPlayer(100);
+        InsidePlayer insidePlayer = new InsidePlayer(100);
 
         // Add players to table
         table.addPlayer(passLinePlayer);
-        table.addPlayer(placeBetPlayer);
+        table.addPlayer(insidePlayer);
 
         // While table can play, play a round
         while (table.canPlay()) {

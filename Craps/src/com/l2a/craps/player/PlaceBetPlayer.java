@@ -9,7 +9,7 @@ import com.l2a.craps.bet.Bet;
 import com.l2a.craps.bet.PlaceBet;
 import com.l2a.craps.bet.PlaceBet.Odds;
 
-public class PlaceBetPlayer extends PassLinePlayer {
+public abstract class PlaceBetPlayer extends BasePlayer {
     private List<PlaceBet> mPlaceBets = new ArrayList<PlaceBet>();
 
     public PlaceBetPlayer(int amount) {
@@ -18,21 +18,19 @@ public class PlaceBetPlayer extends PassLinePlayer {
 
     @Override
     public List<Bet> getBets(Table table) {
-        List<Bet> bets = super.getBets(table);
-
         clearLostBets();
+        return new ArrayList<Bet>();
+    }
 
-        // If point is on and no place bets
-        if (!table.isPointEstablished()) {
-            return bets;
+    @Override
+    public boolean canPlay(Table table) {
+        boolean hasPlaceBet = false;
+
+        for (PlaceBet placeBet : mPlaceBets) {
+            hasPlaceBet = hasPlaceBet || hasPlaceBetOnNumber(placeBet.getNumber());
         }
 
-        addPlaceBetOnNumber(bets, table, 5);
-        addPlaceBetOnNumber(bets, table, 6);
-        addPlaceBetOnNumber(bets, table, 8);
-        addPlaceBetOnNumber(bets, table, 9);
-
-        return bets;
+        return super.canPlay(table) || hasPlaceBet;
     }
 
     protected void addPlaceBetOnNumber(List<Bet> bets, Table table, int number) {

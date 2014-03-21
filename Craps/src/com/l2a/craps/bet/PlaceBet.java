@@ -7,6 +7,7 @@ import com.l2a.craps.player.Player;
 
 public class PlaceBet extends BaseBet {
     private final int mNumber;
+    private boolean mIsOn = true;
 
     public PlaceBet(Player player, int amount, int number) {
         super(player, amount);
@@ -17,8 +18,11 @@ public class PlaceBet extends BaseBet {
     public void resolve(Table table, Roll roll) {
         super.resolve(table, roll);
 
-        int value = roll.getValue();
+        if (!isOn()) {
+            return;
+        }
 
+        int value = roll.getValue();
         if (mNumber == value) {
             Odds odds = getOdds(mNumber);
             int payment = odds.getPayment(getAmount());
@@ -26,6 +30,22 @@ public class PlaceBet extends BaseBet {
         } else if (7 == value) {
             lost();
         }
+    }
+
+    private boolean isOn() {
+        return mIsOn;
+    }
+
+    public int getNumber() {
+        return mNumber;
+    }
+
+    public void turnOn() {
+        mIsOn = true;
+    }
+
+    public void turnOff() {
+        mIsOn = false;
     }
 
     public static Odds getOdds(int number) {
@@ -60,10 +80,6 @@ public class PlaceBet extends BaseBet {
             // TODO Auto-generated method stub
             return 0;
         }
-    }
-
-    public int getNumber() {
-        return mNumber;
     }
 
 }

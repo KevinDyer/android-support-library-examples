@@ -33,7 +33,8 @@ public class Table {
         // Resolve table
         resolveTable(roll);
 
-        // TODO Adjust bets
+        // Adjust bets
+        adjustBets(roll);
     }
 
     private void placeBets() {
@@ -84,6 +85,12 @@ public class Table {
         }
     }
 
+    private void adjustBets(Roll roll) {
+        for (Player player : mPlayers) {
+            player.adjustBets(this, roll);
+        }
+    }
+
     public boolean isPointEstablished() {
         return (OFF != mPoint);
     }
@@ -102,7 +109,7 @@ public class Table {
 
     public boolean canPlay() {
         for (Player player : mPlayers) {
-            if (player.canPlay()) {
+            if (player.canPlay(this)) {
                 return true;
             }
         }
