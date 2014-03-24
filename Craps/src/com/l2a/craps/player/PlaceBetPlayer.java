@@ -8,6 +8,7 @@ import com.l2a.craps.Table;
 import com.l2a.craps.bet.Bet;
 import com.l2a.craps.bet.PlaceBet;
 import com.l2a.craps.bet.PlaceBet.Odds;
+import com.l2a.craps.dice.Roll;
 
 public abstract class PlaceBetPlayer extends BasePlayer {
     private List<PlaceBet> mPlaceBets = new ArrayList<PlaceBet>();
@@ -31,6 +32,25 @@ public abstract class PlaceBetPlayer extends BasePlayer {
         }
 
         return super.canPlay(table) || hasPlaceBet;
+    }
+
+    @Override
+    public void adjustBets(Table table, Roll roll) {
+        if (table.isPointEstablished()) {
+            int point = table.getPoint();
+            for (PlaceBet placeBet : mPlaceBets) {
+                if (placeBet.getNumber() == point) {
+                    // Turn this bet off
+                    placeBet.turnOff();
+                } else {
+                    placeBet.turnOn();
+                }
+            }
+        } else {
+            for (PlaceBet placeBet : mPlaceBets) {
+                placeBet.turnOff();
+            }
+        }
     }
 
     protected void addPlaceBetOnNumber(List<Bet> bets, Table table, int number) {
