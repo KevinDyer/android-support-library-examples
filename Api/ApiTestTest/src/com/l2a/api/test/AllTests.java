@@ -11,7 +11,6 @@ import com.l2a.api.init.test.InitTests;
 @SuiteClasses({
         InitTests.class,
         ApiIntentHelpersTest.class,
-        AssertTests.class,
 })
 public class AllTests {
 
