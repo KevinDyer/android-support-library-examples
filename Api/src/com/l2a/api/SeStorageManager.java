@@ -41,11 +41,11 @@ public class SeStorageManager extends BroadcastReceiver {
         // Register broadcast receiver
         sContext.registerReceiver(
                 sInstance,
-                new IntentFilter(SeIntent.ACTION_GET_STORAGE_FILENAMES));
+                new IntentFilter(ApiIntents.ACTION_GET_STORAGE_FILENAMES));
 
         // Fire off intent to Main app to get the storage filenames
-        Intent request = new Intent(SeIntent.ACTION_GET_STORAGE_FILENAMES);
-        request.putExtra(SeIntent.EXTRA_PACKAGE_NAME, sContext.getPackageName());
+        Intent request = new Intent(ApiIntents.ACTION_GET_STORAGE_FILENAMES);
+        request.putExtra(ApiIntents.EXTRA_PACKAGE_NAME, sContext.getPackageName());
         sContext.startService(request);
     }
 
@@ -78,11 +78,11 @@ public class SeStorageManager extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
 
-        if (!SeIntent.ACTION_GET_STORAGE_FILENAMES.equals(action)) {
+        if (!ApiIntents.ACTION_GET_STORAGE_FILENAMES.equals(action)) {
             return;
         }
 
-        String prefsDirPath = intent.getStringExtra(SeIntent.EXTRA_PREFS_DIR_PATH);
+        String prefsDirPath = intent.getStringExtra(ApiIntents.EXTRA_PREFS_DIR_PATH);
         Log.d(TAG, "prefsDirPath=" + prefsDirPath);
 
         if (null != prefsDirPath) {
