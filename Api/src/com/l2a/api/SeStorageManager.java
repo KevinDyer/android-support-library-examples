@@ -1,5 +1,5 @@
 
-package com.l2a.plugin.api;
+package com.l2a.api;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,10 +15,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.l2a.plugin.api.internal.FileUtils;
-import com.l2a.plugin.api.internal.SharedPreferencesImpl;
-import com.l2a.plugin.api.internal.XmlUtils;
-import com.l2a.plugin.api.internal.FileUtils.FileStatus;
+import com.l2a.api.internal.FileUtils;
+import com.l2a.api.internal.SharedPreferencesImpl;
+import com.l2a.api.internal.XmlUtils;
+import com.l2a.api.internal.FileUtils.FileStatus;
 
 @SuppressWarnings({
         "rawtypes",

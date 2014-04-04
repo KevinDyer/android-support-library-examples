@@ -1,7 +1,7 @@
 
 package com.l2a.plugin;
 
-import com.l2a.plugin.api.SeStorageManager;
+import com.l2a.api.SeStorageManager;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.l2a.plugin.api.internal;
+package com.l2a.api.internal;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,7 +38,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.l2a.plugin.api.internal.FileUtils.FileStatus;
+import com.l2a.api.internal.FileUtils.FileStatus;
 
 @SuppressWarnings({
         "deprecation",

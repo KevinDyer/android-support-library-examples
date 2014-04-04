@@ -11,8 +11,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.l2a.main.R;
 import com.l2a.main.widget.ImageAdapter;
-import com.l2a.storeelsemain.R;
 
 public class GridViewFragment extends Fragment implements OnItemClickListener {
     @Override

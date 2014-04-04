@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.l2a.plugin.api.internal;
+package com.l2a.api.internal;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

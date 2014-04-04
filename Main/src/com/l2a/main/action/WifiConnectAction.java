@@ -59,7 +59,7 @@ public class WifiConnectAction implements Action {
         List<WifiConfiguration> configuredNetworks = wifiManager.getConfiguredNetworks();
         if (0 < configuredNetworks.size()) {
             int netId = configuredNetworks.get(0).networkId;
-            boolean enableNetwork = wifiManager.enableNetwork(netId, true);
+            wifiManager.enableNetwork(netId, true);
             // TODO Handle fail
         } else {
             Intent intent = new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK);

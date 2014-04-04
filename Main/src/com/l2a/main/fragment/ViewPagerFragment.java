@@ -1,9 +1,6 @@
 
 package com.l2a.main.fragment;
 
-import com.l2a.main.widget.CursorPagerAdapter;
-import com.l2a.storeelsemain.R;
-
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts;
@@ -18,6 +15,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.l2a.main.R;
+import com.l2a.main.widget.CursorPagerAdapter;
 
 public class ViewPagerFragment extends Fragment implements LoaderCallbacks<Cursor> {
     private CursorPagerAdapter mAdapter;

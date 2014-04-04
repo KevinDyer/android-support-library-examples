@@ -9,8 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.l2a.plugin.api.SeStorageManager;
-import com.l2a.storeelseplugin.R;
+import com.l2a.api.SeStorageManager;
 
 public class MainActivity extends Activity {
     private static final String TAG = MainActivity.class.getSimpleName();

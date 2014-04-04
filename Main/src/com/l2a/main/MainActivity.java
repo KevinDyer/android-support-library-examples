@@ -19,7 +19,6 @@ import com.l2a.main.action.ViewPagerAction;
 import com.l2a.main.action.WifiConnectAction;
 import com.l2a.main.widget.ActionAdapter;
 import com.l2a.main.widget.ActionAdapter.Action;
-import com.l2a.storeelsemain.R;
 
 public class MainActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;

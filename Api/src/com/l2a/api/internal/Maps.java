@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.l2a.plugin.api.internal;
+package com.l2a.api.internal;
 
 import java.util.HashMap;
 

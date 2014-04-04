@@ -4,8 +4,8 @@ package com.l2a.main.action;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import com.l2a.main.R;
 import com.l2a.main.widget.ActionAdapter.Action;
-import com.l2a.storeelsemain.R;
 
 abstract class FragmentAction implements Action {
     private final FragmentManager mFragmentManager;

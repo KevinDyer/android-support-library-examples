@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.l2a.storeelsemain.R;
+import com.l2a.main.R;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;

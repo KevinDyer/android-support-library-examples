@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.l2a.plugin.api.SeIntent;
+import com.l2a.api.SeIntent;
 
 public class FileService extends IntentService {
     private static final String TAG = FileService.class.getSimpleName();

@@ -1,5 +1,5 @@
 
-package com.l2a.plugin.api;
+package com.l2a.api;
 
 public class SeIntent {
     private SeIntent() {
