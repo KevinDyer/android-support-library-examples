@@ -22,7 +22,7 @@ public class ApiIntentHelper {
         return intent.getParcelableExtra(ApiIntent.EXTRA_PLUGIN_DESCRIPTION);
     }
 
-    public static Intent getReplyTo(Intent intent, PendingIntent replyTo) {
+    public static Intent putReplyTo(Intent intent, PendingIntent replyTo) {
         if (null == intent) {
             return null;
         }

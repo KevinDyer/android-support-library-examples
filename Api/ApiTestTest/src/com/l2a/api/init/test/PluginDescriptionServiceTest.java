@@ -1,15 +1,13 @@
 
 package com.l2a.api.init.test;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import android.test.ServiceTestCase;
 
-@RunWith(MockitoJUnitRunner.class)
-public class PluginDescriptionServiceTest {
+import com.l2a.api.init.PluginDescriptionService;
 
-    @Test
-    public void test() {
+public class PluginDescriptionServiceTest extends ServiceTestCase<PluginDescriptionService> {
+    public PluginDescriptionServiceTest() {
+        super(PluginDescriptionService.class);
     }
 
 }

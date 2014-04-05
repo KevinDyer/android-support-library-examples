@@ -55,7 +55,7 @@ public class RunTestFragment extends ListFragment {
          * activity in AndroidManifest.xml.
          */
         int id = item.getItemId();
-        if (R.id.action_settings == id) {
+        if (R.id.action_run_tests == id) {
             runAllTests();
 
         } else {
