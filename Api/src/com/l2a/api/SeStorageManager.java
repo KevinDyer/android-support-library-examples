@@ -35,17 +35,17 @@ public class SeStorageManager extends BroadcastReceiver {
             throw new RuntimeException(TAG + " has already been initialized.");
         }
 
-        sContext = context;
+        sContext = context.getApplicationContext();
         sInstance = new SeStorageManager();
 
         // Register broadcast receiver
         sContext.registerReceiver(
                 sInstance,
-                new IntentFilter(ApiIntents.ACTION_GET_STORAGE_FILENAMES));
+                new IntentFilter(ApiIntent.ACTION_GET_STORAGE_FILENAMES));
 
         // Fire off intent to Main app to get the storage filenames
-        Intent request = new Intent(ApiIntents.ACTION_GET_STORAGE_FILENAMES);
-        request.putExtra(ApiIntents.EXTRA_PACKAGE_NAME, sContext.getPackageName());
+        Intent request = new Intent(ApiIntent.ACTION_GET_STORAGE_FILENAMES);
+        request.putExtra(ApiIntent.EXTRA_PACKAGE_NAME, sContext.getPackageName());
         sContext.startService(request);
     }
 
@@ -78,11 +78,11 @@ public class SeStorageManager extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
 
-        if (!ApiIntents.ACTION_GET_STORAGE_FILENAMES.equals(action)) {
+        if (!ApiIntent.ACTION_GET_STORAGE_FILENAMES.equals(action)) {
             return;
         }
 
-        String prefsDirPath = intent.getStringExtra(ApiIntents.EXTRA_PREFS_DIR_PATH);
+        String prefsDirPath = intent.getStringExtra(ApiIntent.EXTRA_PREFS_DIR_PATH);
         Log.d(TAG, "prefsDirPath=" + prefsDirPath);
 
         if (null != prefsDirPath) {

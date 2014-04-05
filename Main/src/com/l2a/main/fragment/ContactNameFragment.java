@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
-public class MyFragment extends Fragment {
+public class ContactNameFragment extends Fragment {
     private static final String ARG_DISPLAY_NAME = "arg_display_name";
 
     public static Fragment newinstance(Cursor cursor) {
-        Fragment fragment = new MyFragment();
+        Fragment fragment = new ContactNameFragment();
         Bundle args = new Bundle();
         args.putString(
                 ARG_DISPLAY_NAME,

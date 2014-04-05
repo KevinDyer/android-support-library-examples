@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.l2a.main.fragment.MyFragment;
+import com.l2a.main.fragment.ContactNameFragment;
 
 public class CursorPagerAdapter extends FragmentPagerAdapter {
     private Cursor mCursor;
@@ -22,7 +22,7 @@ public class CursorPagerAdapter extends FragmentPagerAdapter {
         }
 
         mCursor.moveToPosition(position);
-        return MyFragment.newinstance(mCursor);
+        return ContactNameFragment.newinstance(mCursor);
     }
 
     @Override

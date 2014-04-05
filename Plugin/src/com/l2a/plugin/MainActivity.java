@@ -1,29 +1,29 @@
 
 package com.l2a.plugin;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.l2a.api.SeStorageManager;
-
-public class MainActivity extends Activity {
-    private static final String TAG = MainActivity.class.getSimpleName();
-    private SeStorageManager mStorageManager;
+public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        mStorageManager = SeStorageManager.getInstance();
+        if (null == savedInstanceState) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new MainFragment())
+                    .commit();
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -31,30 +31,25 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        final int id = item.getItemId();
-
-        boolean handled = false;
-
-        switch (id) {
-        case R.id.action_settings:
-            SharedPreferences prefs = mStorageManager.getSharedPreferences(0);
-            if (null == prefs) {
-                Log.w(TAG, "prefs is null.");
-                break;
-            }
-
-            Editor editor = prefs.edit();
-            editor.putString(TAG, TAG);
-            editor.commit();
-
-            handled = true;
-            break;
-
-        default:
-            handled = super.onOptionsItemSelected(item);
-            break;
+        /*
+         * Handle action bar item clicks here. The action bar will automatically
+         * handle clicks on the Home/Up button, so long as you specify a parent
+         * activity in AndroidManifest.xml.
+         */
+        int id = item.getItemId();
+        if (R.id.action_settings == id) {
+            return true;
         }
-
-        return handled;
+        return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class MainFragment extends ListFragment {
+
+        public MainFragment() {
+        }
+    }
+
 }

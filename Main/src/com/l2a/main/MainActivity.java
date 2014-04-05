@@ -38,10 +38,14 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
+        // Set the action adapter for the drawer
         mActionAdapter = new ActionAdapter(this);
         mActionAdapter.add(new GridViewAction(getSupportFragmentManager()));
         mActionAdapter.add(new ViewPagerAction(getSupportFragmentManager()));
         mActionAdapter.add(new WifiConnectAction(this));
+        
+        mDrawerList.setAdapter(mActionAdapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListner());
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -64,10 +68,6 @@ public class MainActivity extends ActionBarActivity {
                 supportInvalidateOptionsMenu();
             }
         };
-
-        // Set the action adapter for the drawer
-        mDrawerList.setAdapter(mActionAdapter);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListner());
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);

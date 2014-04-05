@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ApiTestTest</string>
+    <string name="app_name">Api Test</string>
+    <string name="title_activity_main">Api Tests</string>
+    <string name="action_run_test">Run tests</string>
 
 </resources>
