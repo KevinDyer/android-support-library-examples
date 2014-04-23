@@ -15,6 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.l2a.main.action.GridViewAction;
+import com.l2a.main.action.NativeAction;
 import com.l2a.main.action.ViewPagerAction;
 import com.l2a.main.action.WifiConnectAction;
 import com.l2a.main.widget.ActionAdapter;
@@ -43,6 +44,7 @@ public class MainActivity extends ActionBarActivity {
         mActionAdapter.add(new GridViewAction(getSupportFragmentManager()));
         mActionAdapter.add(new ViewPagerAction(getSupportFragmentManager()));
         mActionAdapter.add(new WifiConnectAction(this));
+        mActionAdapter.add(new NativeAction());
         
         mDrawerList.setAdapter(mActionAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListner());
