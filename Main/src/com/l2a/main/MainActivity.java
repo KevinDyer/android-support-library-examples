@@ -18,6 +18,7 @@ import com.l2a.main.action.GridViewAction;
 import com.l2a.main.action.NativeAction;
 import com.l2a.main.action.ViewPagerAction;
 import com.l2a.main.action.WifiConnectAction;
+import com.l2a.main.plugin.PluginManagerService;
 import com.l2a.main.widget.ActionAdapter;
 import com.l2a.main.widget.ActionAdapter.Action;
 
@@ -45,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
         mActionAdapter.add(new ViewPagerAction(getSupportFragmentManager()));
         mActionAdapter.add(new WifiConnectAction(this));
         mActionAdapter.add(new NativeAction());
-        
+
         mDrawerList.setAdapter(mActionAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListner());
 
@@ -78,6 +79,8 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         showFragment(new Fragment());
+
+        PluginManagerService.getPluginDescription(this);
     }
 
     @Override
