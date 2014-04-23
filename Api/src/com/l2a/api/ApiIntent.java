@@ -54,4 +54,5 @@ public class ApiIntent {
      * @see ApiIntent#ACTION_GET_PLUGIN_DESCRIPTION
      */
     public static final String EXTRA_REPLY_TO = EXTRA + ".REPLY_TO";
+    public static final String EXTRA_PERSON = EXTRA + ".PERSON";
 }

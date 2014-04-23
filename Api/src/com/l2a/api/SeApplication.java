@@ -3,8 +3,8 @@ package com.l2a.api;
 
 import android.app.Application;
 
-@SuppressWarnings("unused")
 public class SeApplication extends Application {
+    @SuppressWarnings("unused")
     private static final String TAG = SeApplication.class.getSimpleName();
 
     public SeApplication() {

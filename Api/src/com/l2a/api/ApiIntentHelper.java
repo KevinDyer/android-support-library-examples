@@ -4,6 +4,7 @@ package com.l2a.api;
 import android.app.PendingIntent;
 import android.content.Intent;
 
+import com.l2a.api.common.Person;
 import com.l2a.api.init.PluginDescription;
 
 public class ApiIntentHelper {
@@ -34,5 +35,19 @@ public class ApiIntentHelper {
             return null;
         }
         return intent.getParcelableExtra(ApiIntent.EXTRA_REPLY_TO);
+    }
+
+    public static Intent putPerson(Intent intent, Person person) {
+        if (null == intent) {
+            return null;
+        }
+        return intent.putExtra(ApiIntent.EXTRA_PERSON, person);
+    }
+
+    public static Person getPerson(Intent intent) {
+        if (null == intent) {
+            return null;
+        }
+        return intent.getParcelableExtra(ApiIntent.EXTRA_PERSON);
     }
 }
