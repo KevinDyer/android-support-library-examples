@@ -36,6 +36,9 @@ public class Person implements Parcelable {
         mCustom = in.readBundle();
     }
 
+    public Person() {
+    }
+
     public String getName() {
         return mName;
     }

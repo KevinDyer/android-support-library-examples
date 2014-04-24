@@ -15,7 +15,7 @@ public class PluginDescription implements Parcelable {
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        out.writeList(mPluginActions);
+        out.writeTypedList(mPluginActions);
     }
 
     public static final Parcelable.Creator<PluginDescription> CREATOR = new Parcelable.Creator<PluginDescription>() {
@@ -29,7 +29,7 @@ public class PluginDescription implements Parcelable {
     };
 
     private PluginDescription(Parcel in) {
-        in.readList(mPluginActions, null);
+        in.readTypedList(mPluginActions, PluginAction.CREATOR);
     }
 
     public PluginDescription() {

@@ -1,11 +1,16 @@
 
 package com.l2a.plugin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.l2a.api.ApiIntent;
+import com.l2a.api.ApiIntentHelper;
+import com.l2a.api.common.Person;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -38,6 +43,15 @@ public class MainActivity extends ActionBarActivity {
          */
         int id = item.getItemId();
         if (R.id.action_settings == id) {
+            Person person = new Person();
+            person.setName("John Smith");
+            person.setAge(28);
+            person.addCustom("This is a key", "This is a value");
+            person.addCustom("This is a key too", "This is a value too");
+            Intent intent = ApiIntentHelper.putPerson(new Intent(), person);
+            intent.setAction(ApiIntent.ACTION_SEND_PERSON);
+            sendBroadcast(intent);
+            
             return true;
         }
         return super.onOptionsItemSelected(item);

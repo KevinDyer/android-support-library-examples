@@ -33,7 +33,7 @@
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
-                <action android:name="com.l2a.storeelseapi.action.GET_STORAGE_FILENAMES" />
+                <action android:name="com.l2a.api.intent.action.GET_STORAGE_FILENAMES" />
             </intent-filter>
         </service>
 

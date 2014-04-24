@@ -2,7 +2,9 @@
 package com.l2a.api;
 
 import android.app.PendingIntent;
+import android.content.Intent;
 
+import com.l2a.api.common.Person;
 import com.l2a.api.init.PluginDescription;
 
 public class ApiIntent {
@@ -54,5 +56,14 @@ public class ApiIntent {
      * @see ApiIntent#ACTION_GET_PLUGIN_DESCRIPTION
      */
     public static final String EXTRA_REPLY_TO = EXTRA + ".REPLY_TO";
+
+    /**
+     * This is a send person action
+     */
+    public static final String ACTION_SEND_PERSON = ACTION + ".SEND_PERSON";
+
+    /**
+     * This extra holds the {@link Person} value.
+     */
     public static final String EXTRA_PERSON = EXTRA + ".PERSON";
 }
