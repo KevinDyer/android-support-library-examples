@@ -193,7 +193,7 @@ public class MainActivity extends ActionBarActivity {
         mActionAdapter.add(new GridViewAction(getSupportFragmentManager()));
         mActionAdapter.add(new ViewPagerAction(getSupportFragmentManager()));
         mActionAdapter.add(new WifiConnectAction(this));
-        mActionAdapter.add(new NativeAction());
+        mActionAdapter.add(new NativeAction(this));
 
         List<PluginAction> pluginActions = pluginDescription.getPluginActions();
         for (PluginAction pluginAction : pluginActions) {
