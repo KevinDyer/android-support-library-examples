@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import com.l2a.main.R;
 import com.l2a.main.widget.ActionAdapter.Action;
 
-abstract class FragmentAction implements Action {
+public abstract class FragmentAction implements Action {
     private final FragmentManager mFragmentManager;
 
     protected FragmentAction(FragmentManager fragmentManager) {
@@ -23,8 +23,13 @@ abstract class FragmentAction implements Action {
     protected abstract Fragment getFragment();
 
     private void showFragment(Fragment fragment) {
-        mFragmentManager.beginTransaction()
+        getFragmentManager()
+                .beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .commit();
+    }
+
+    protected FragmentManager getFragmentManager() {
+        return mFragmentManager;
     }
 }

@@ -18,13 +18,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.l2a.api.ApiIntent;
 import com.l2a.api.ApiIntentHelper;
-import com.l2a.api.common.Person;
 import com.l2a.api.init.PluginAction;
 import com.l2a.api.init.PluginDescription;
 import com.l2a.main.action.GridViewAction;
@@ -32,6 +31,7 @@ import com.l2a.main.action.NativeAction;
 import com.l2a.main.action.PluginActionCompat;
 import com.l2a.main.action.ViewPagerAction;
 import com.l2a.main.action.WifiConnectAction;
+import com.l2a.main.cardflip.CardFlipAction;
 import com.l2a.main.plugin.PluginManagerService;
 import com.l2a.main.widget.ActionAdapter;
 import com.l2a.main.widget.ActionAdapter.Action;
@@ -92,25 +92,6 @@ public class MainActivity extends ActionBarActivity {
 
         showFragment(new Fragment());
 
-        registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Person person = ApiIntentHelper.getPerson(intent);
-                if (null == person) {
-                    Log.w(TAG, "No person in intent.");
-                    return;
-                }
-
-                Log.d(TAG, "Name: " + person.getName());
-                Log.d(TAG, "Age: " + Integer.toString(person.getAge()));
-                Bundle custom = person.getCustom();
-                for (String key : custom.keySet()) {
-                    String value = custom.getString(key);
-                    Log.d(TAG, String.format("%s: %s", key, value));
-                }
-            }
-        }, new IntentFilter(ApiIntent.ACTION_SEND_PERSON));
-
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
         lbm.registerReceiver(new BroadcastReceiver() {
             @Override
@@ -126,6 +107,13 @@ public class MainActivity extends ActionBarActivity {
         }, new IntentFilter(PluginManagerService.ACTION_NEW_PLUGIN_DESCRIPTION));
 
         PluginManagerService.getPluginDescription(this);
+        
+        findViewById(R.id.content_frame).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Content frame has been clicked");
+            }
+        });
     }
 
     @Override
@@ -194,6 +182,7 @@ public class MainActivity extends ActionBarActivity {
         mActionAdapter.add(new ViewPagerAction(getSupportFragmentManager()));
         mActionAdapter.add(new WifiConnectAction(this));
         mActionAdapter.add(new NativeAction(this));
+        mActionAdapter.add(new CardFlipAction(getSupportFragmentManager()));
 
         List<PluginAction> pluginActions = pluginDescription.getPluginActions();
         for (PluginAction pluginAction : pluginActions) {

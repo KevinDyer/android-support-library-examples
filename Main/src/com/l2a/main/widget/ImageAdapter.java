@@ -20,7 +20,17 @@ public class ImageAdapter extends BaseAdapter {
         final int N = 30;
         mThumbIds = new Integer[N];
         for (int i = 0; i < N; i++) {
-            mThumbIds[i] = R.drawable.ic_launcher;
+            switch (N % 3) {
+            case 0:
+                mThumbIds[i] = R.drawable.ic_launcher;
+                break;
+            case 1:
+                mThumbIds[i] = R.drawable.thumb1;
+                break;
+            case 2:
+                mThumbIds[i] = R.drawable.thumb2;
+                break;
+            }
         }
     }
 
@@ -42,7 +52,7 @@ public class ImageAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-//            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+            // imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
             imageView.setAdjustViewBounds(true);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setPadding(8, 8, 8, 8);

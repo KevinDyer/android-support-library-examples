@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">StoreElseMain</string>
-    <string name="action_settings">Settings</string>
-
     <!-- Titles -->
+    <string name="app_name">StoreElseMain</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_card_back">This is the title of the back of the card</string>
 
     <!-- Drawer -->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+
+    <!-- Card Flip -->
+    <string name="action_flip">Flip</string>
+    <string name="description_card_back">This is the back of the card</string>
 
 </resources>

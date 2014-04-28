@@ -17,8 +17,7 @@ LOCAL_SRC_FILES := \
 	minizip/mztools.c \
 	minizip/unzip.c \
 	minizip/zip.c \
-	com_l2a_main_action_NativeAction.cpp \
-	onload.cpp
+	com_l2a_main_action_NativeAction.cpp
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/zlib \
